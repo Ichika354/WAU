@@ -1,0 +1,334 @@
+openapi: 3.0.0
+info:
+  title: Product
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+paths:
+  /users:
+    get:
+      tags:
+        - default
+      summary: AllUser
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /registration:
+    post:
+      tags:
+        - default
+      summary: Registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Ghaida Fasya Yuthika Afifah
+                npm: 714220031
+                numberPhone: '081243243133'
+                password: admin12345
+                confirmPassword: admin12345
+                role: Buyer
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /login:
+    post:
+      tags:
+        - default
+      summary: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                npm: 714220032
+                password: admin12345
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /user:
+    get:
+      tags:
+        - default
+      summary: UserLogin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /product:
+    get:
+      tags:
+        - default
+      summary: AllProduct
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /product/4:
+    get:
+      tags:
+        - default
+      summary: ProductId
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /product-seller:
+    get:
+      tags:
+        - default
+      summary: ProductSeller
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /category:
+    get:
+      tags:
+        - default
+      summary: AllCategory
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - default
+      summary: AddCategorySeller
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_category_admin: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /category/1:
+    get:
+      tags:
+        - default
+      summary: AllCategoryId
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /category-seller:
+    get:
+      tags:
+        - default
+      summary: CategorySeller
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /category/2:
+    put:
+      tags:
+        - default
+      summary: UpdateCategorySeller
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                id_category_admin: 2
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - default
+      summary: DeleteCategorySeller
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /category-admin:
+    get:
+      tags:
+        - default
+      summary: AllCategoryAdmin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /category-admin/1:
+    get:
+      tags:
+        - default
+      summary: CategoryAdminId
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /category-admin/11:
+    delete:
+      tags:
+        - default
+      summary: DeleteCategoryAdmin
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /category-admin/:
+    post:
+      tags:
+        - default
+      summary: AddCategoryAdmin
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                category: Gaming
+                icon: fa-solid-fa-mobile
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /category-admin/12:
+    put:
+      tags:
+        - default
+      summary: UpdateCategoryAdmin
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                category: Game
+                icon: fa-solid-fa-game
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /province:
+    get:
+      tags:
+        - default
+      summary: Province
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /regency:
+    get:
+      tags:
+        - default
+      summary: Regency
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /district:
+    get:
+      tags:
+        - default
+      summary: District
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /village:
+    get:
+      tags:
+        - default
+      summary: Village
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /address:
+    post:
+      tags:
+        - default
+      summary: PostAddress
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                province_id: 11
+                regency_id: 1101
+                district_id: 1101010
+                village_id: 1101010001
+                patokan: JL Latiung No 24
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - default
+      summary: AddressUser
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

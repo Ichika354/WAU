@@ -1,0 +1,483 @@
+{
+  "info": {
+    "_postman_id": "d8a41ebb-a451-40c0-93f7-e027a94bbb5d",
+    "name": "Product",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "23649954"
+  },
+  "item": [
+    {
+      "name": "AllUser",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/users",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["users"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Registration",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\" : \"Ghaida Fasya Yuthika Afifah\",\r\n  \"npm\" : 714220031,\r\n  \"numberPhone\" : \"081243243133\",\r\n  \"password\" : \"admin12345\",\r\n  \"confirmPassword\" : \"admin12345\",\r\n  \"role\" : \"Buyer\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/registration",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["registration"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJuYW1lIjoiUmFuaWEgQXl1bmkgS2FydGluaSBGaXRyaSIsIm5wbSI6NzE0MjIwMDMyLCJyb2xlIjoiU2VsbGVyIiwiaWF0IjoxNzE2ODA1NzA2LCJleHAiOjE3MTY4NDg5MDZ9.cN0t4g_ZspP8UAvyLgyRoOC-5RU5cBKSiLwsK-g896k",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"npm\" : 714220032,\r\n  \"password\" : \"admin12345\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/login",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["login"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UserLogin",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjE0LCJuYW1lIjoiUmFuaWEgQXl1bmkgS2FydGluaSBGaXRyaSIsIm5wbSI6NzE0MjIwMDMyLCJyb2xlIjoiU2VsbGVyIiwiaWF0IjoxNzE2ODA1NzA2LCJleHAiOjE3MTY4NDg5MDZ9.cN0t4g_ZspP8UAvyLgyRoOC-5RU5cBKSiLwsK-g896k",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/user",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["user"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AllProduct",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/product",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["product"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ProductId",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/product/4",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["product", "4"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "ProductSeller",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/product-seller",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["product-seller"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AllCategory",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/category",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AllCategoryId",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/category/1",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CategorySeller",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id_category_admin\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/category-seller",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category-seller"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AddCategorySeller",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id_category_admin\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/category",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateCategorySeller",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id_category_admin\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/category/2",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category", "2"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DeleteCategorySeller",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/category/2",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category", "2"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AllCategoryAdmin",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsIm5hbWUiOiJNIEZhY2hyaXphIEZhcmhhbiIsIm5wbSI6NzE0MjIwMDA1LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTY4MDczMTgsImV4cCI6MTcxNjg1MDUxOH0.7rU_BkgjP1zlAajiypSUK7ID4lLNoQCQuLc1CkFc-l4",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"npm\":714220005,\r\n    \"password\": \"admin12345\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/category-admin",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category-admin"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CategoryAdminId",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/category-admin/1",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category-admin", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DeleteCategoryAdmin",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsIm5hbWUiOiJNIEZhY2hyaXphIEZhcmhhbiIsIm5wbSI6NzE0MjIwMDA1LCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MTY4MTA0NzMsImV4cCI6MTcxNjg1MzY3M30.OveEcSxiqTcYMTajV0YUlIkLw5Qp72R9QY_HISSqemE",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"npm\" : 714220005,\r\n    \"password\" : \"admin12345\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/category-admin/11",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category-admin", "11"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AddCategoryAdmin",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"category\": \"Gaming\",\r\n    \"icon\": \"fa-solid-fa-mobile\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/category-admin/",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category-admin", ""]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateCategoryAdmin",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"category\": \"Game\",\r\n    \"icon\": \"fa-solid-fa-game\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/category-admin/12",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["category-admin", "12"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Province",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/province",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["province"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Regency",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/regency",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["regency"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "District",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/district",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["district"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Village",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/village",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["village"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PostAddress",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"province_id\": 11,\r\n    \"regency_id\": 1101,\r\n    \"district_id\": 1101010,\r\n    \"village_id\": 1101010001,\r\n    \"patokan\": \"JL Latiung No 24\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:3000/address",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["address"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AddressUser",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/address",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["address"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
+

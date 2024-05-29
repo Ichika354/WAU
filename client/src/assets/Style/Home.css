@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Cabin:ital,wdth,wght@0,75..100,400..700;1,75..100,400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+*, body, html {
+    margin: 0;
+    padding: 0;
+}
+
+.font-cabin {
+    font-family: "Cabin", sans-serif;
+}
+
+.font-montserrat {
+    font-family: "Montserrat", sans-serif;
+}
+
+.p-x-16 {
+    padding: 0 16.5%;
+}
+
+.fs-default {
+    font-size: 22px !important;
+}
+
+.fs-title {
+    font-size: 50px !important;
+}
+
+.fs-description {
+    font-size: 20px !important;
+}
+
+.fs-icon {
+    font-size: 40px !important;
+}
+
+.text-white {
+    color: white !important;
+}
+
+.bg-img-orange {
+    background-image: url('./../Image/bg-orange.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-img-orange-2 {
+    background-image: url('./../Image/bg-orange-2.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-color-light-grey {
+    background-color: #f2f2f2;
+}
+
+.gx-6 {
+    column-gap: 56px;
+}
