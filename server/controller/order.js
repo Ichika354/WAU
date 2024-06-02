@@ -59,6 +59,8 @@ router.post("/order", authenticateToken, async (req,res)=> {
   const userId = req.user.userId;
 
   const { qty, total_price } = req.body;
+
+  console.log(qty);
 })
 
 export default router;

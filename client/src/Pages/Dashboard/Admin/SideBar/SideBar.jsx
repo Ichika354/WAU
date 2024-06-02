@@ -1,38 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SideBar = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await axios.get('http://localhost:3000/user', {
-          withCredentials: true // Mengirimkan cookie bersama permintaan
+          withCredentials: true // Send cookies with the request
         });
 
         if (response.data.success) {
           setUser(response.data.data[0]);
         } else {
           setError(response.data.message);
+          navigate('/access'); // Redirect to /access if not authenticated
         }
       } catch (err) {
         setError('Failed to fetch user data');
+        navigate('/access'); // Redirect to /access if error occurs
       }
     };
 
     fetchUser();
-  }, []);
+  }, [navigate]);
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>Redirecting...</div>; // Optional: Show a message while redirecting
   }
 
   if (!user) {
     return <div>Loading...</div>;
   }
-
   return (
     <div>
       <div className="slider" id="sliders">

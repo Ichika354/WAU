@@ -10,9 +10,78 @@ const app = express();
 configureMiddleware(app);
 const router = express.Router();
 
+
+/**
+ * @openapi
+ * /registration:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     description: Register a new user
+ *     security: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               npm:
+ *                 type: number
+ *               number_phone:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               confirmPassword:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Account created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                 userId:
+ *                   type: number
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                 message:
+ *                   type: string  
+ */
 router.post("/registration", async (req, res) => {
   try {
-    const { name, npm, numberPhone, password, confirmPassword, role } = req.body;
+    const { name, npm, number_phone, password, confirmPassword, role } = req.body;
     console.log(npm);
 
     if ((npm < 714220001) | (npm > 719229999)) {
@@ -56,7 +125,7 @@ router.post("/registration", async (req, res) => {
       .insert({
         name: name,
         npm: npm,
-        numberPhone: numberPhone,
+        number_phone: number_phone,
         password: hashedPassword,
         role: role,
         created_at: createdAt,
@@ -82,6 +151,70 @@ router.post("/registration", async (req, res) => {
   }
 });
 
+
+/**
+ * @openapi
+ * /login:
+ *   post:
+ *     tags:
+ *       - Auth
+ *     summary: Logs in a user
+ *     security : []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               npm:
+ *                 type: number
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Successful login
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 role:
+ *                   type: string
+ *                 message:
+ *                   type: string
+ *                 token:
+ *                   type: string
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
 router.post("/login", async (req, res) => {
   const { npm, password } = req.body;
   console.log(npm, password);

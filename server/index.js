@@ -11,8 +11,11 @@ import user from "./controller/user.js";
 import address from "./controller/address.js";
 import order from "./controller/order.js";
 
+import swaggerDocs from "./config/swagger.js";
+
 dotenv.config();
 
+const port = 3000;
 const app = express();
 configureMiddleware(app);
 
@@ -25,8 +28,8 @@ app.use(product);
 app.use(user);
 app.use(address);
 app.use(order);
+swaggerDocs(app, port);
 
-const port = 3000;
 app.listen(port, () => {
     console.log(`running server on port ${port}`);
 });

@@ -16,6 +16,71 @@ const upload = multer({
   storage: storage,
 });
 
+/**
+ * @openapi
+ * /product:
+ *   get:
+ *     tags:
+ *       - Product
+ *     summary: Get list of products
+ *     security: []
+ *     description: Retrieve a list of all products with their categories.
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved list of products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id_product:
+ *                         type: integer
+ *                         example: 1
+ *                       name:
+ *                         type: string
+ *                         example: ProductName
+ *                       price:
+ *                         type: number
+ *                         format: float
+ *                         example: 19.99
+ *                       description:
+ *                         type: string
+ *                         example: Product description here
+ *                       category_id:
+ *                         type: integer
+ *                         example: 1
+ *                       categories:
+ *                         type: object
+ *                         properties:
+ *                           id_category:
+ *                             type: integer
+ *                             example: 1
+ *                           name:
+ *                             type: string
+ *                             example: CategoryName
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
+
 router.get("/product", async (req, res) => {
   try {
     const { data: products, error } = await supabase
@@ -42,6 +107,89 @@ router.get("/product", async (req, res) => {
     });
   } catch (error) {}
 });
+
+/**
+ * @openapi
+ * /product/{id}:
+ *   get:
+ *     tags:
+ *       - Product
+ *     summary: Get product by ID
+ *     security: []
+ *     description: Retrieve a product by its ID along with its category.
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The ID of the product to retrieve
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id_product:
+ *                       type: integer
+ *                       example: 1
+ *                     name:
+ *                       type: string
+ *                       example: ProductName
+ *                     price:
+ *                       type: number
+ *                       format: float
+ *                       example: 19.99
+ *                     description:
+ *                       type: string
+ *                       example: Product description here
+ *                     category_id:
+ *                       type: integer
+ *                       example: 1
+ *                     categories:
+ *                       type: object
+ *                       properties:
+ *                         id_category:
+ *                           type: integer
+ *                           example: 1
+ *                         name:
+ *                           type: string
+ *                           example: CategoryName
+ *       404:
+ *         description: Product not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Product not found
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
 
 router.get("/product/:id", async (req, res) => {
   const { id } = req.params;
@@ -79,6 +227,87 @@ router.get("/product/:id", async (req, res) => {
   } catch (error) {}
 });
 
+/**
+ * @openapi
+ * /product-seller:
+ *   get:
+ *     tags:
+ *       - Product
+ *     summary: Get seller's products
+ *     description: Retrieve all products associated with the authenticated seller.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved seller's products
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id_product:
+ *                         type: integer
+ *                         example: 1
+ *                       name:
+ *                         type: string
+ *                         example: ProductName
+ *                       price:
+ *                         type: number
+ *                         format: float
+ *                         example: 19.99
+ *                       description:
+ *                         type: string
+ *                         example: Product description here
+ *                       category_id:
+ *                         type: integer
+ *                         example: 1
+ *                       categories:
+ *                         type: object
+ *                         properties:
+ *                           id_category:
+ *                             type: integer
+ *                             example: 1
+ *                           name:
+ *                             type: string
+ *                             example: CategoryName
+ *       401:
+ *         description: Unauthorized
+ *       404:
+ *         description: Product not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Product not found
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
+
 router.get("/product-seller", authenticateToken, async (req, res) => {
   const id = req.user.userId; // Mengambil userId dari token yang telah di-autentikasi
   try {
@@ -114,24 +343,126 @@ router.get("/product-seller", authenticateToken, async (req, res) => {
   } catch (error) {}
 });
 
+/**
+ * @openapi
+ * /product:
+ *   post:
+ *     tags:
+ *       - Product
+ *     summary: Add new product
+ *     description: Add a new product for the authenticated user.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id_category:
+ *                 type: integer
+ *                 example: 1
+ *               product_name:
+ *                 type: string
+ *                 example: "Product Name"
+ *               price:
+ *                 type: number
+ *                 format: float
+ *                 example: 19.99
+ *               stock:
+ *                 type: integer
+ *                 example: 100
+ *               detail:
+ *                 type: string
+ *                 example: "Detailed description of the product"
+ *               image:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       200:
+ *         description: Successfully added new product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Product has been added
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id_product:
+ *                       type: integer
+ *                       example: 1
+ *                     id_user:
+ *                       type: integer
+ *                       example: 1
+ *                     id_category:
+ *                       type: integer
+ *                       example: 1
+ *                     product_name:
+ *                       type: string
+ *                       example: "Product Name"
+ *                     price:
+ *                       type: number
+ *                       format: float
+ *                       example: 19.99
+ *                     stock:
+ *                       type: integer
+ *                       example: 100
+ *                     detail:
+ *                       type: string
+ *                       example: "Detailed description of the product"
+ *                     photo:
+ *                       type: string
+ *                       example: "URL of the product image"
+ *                     created_at:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2024-06-01T12:00:00Z"
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
+
 router.post("/product", authenticateToken, upload.single("image"), async (req, res) => {
-  const { id_category, produkName, price, stock, detail } = req.body;
-  const userId = req.user.userId; // Mengambil userId dari token yang telah di-autentikasi
+  const { id_category, product_name, price, stock, detail } = req.body;
+  const userId = req.user.userId; // Get userId from the authenticated token
   const image = req.file;
-
-  console.log(userId);
-
-  console.log(id_category, produkName, price, stock, detail);
 
   try {
     const createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
 
     // Generate unique filename using UUID
-    const { data: imageData, error: imageError } = await supabase.storage.from("productImage").upload(`/${image.originalname}`, image.buffer);
+    const uniqueFilename = `${uuidv4()}-${image.originalname}`;
+    const { data: imageData, error: imageError } = await supabase.storage.from("productImage").upload(uniqueFilename, image.buffer);
 
     if (imageError) {
-      return res.json(imageError);
+      console.error("Image upload error:", imageError);
+      return res.status(500).json({
+        success: false,
+        message: "Image upload failed",
+      });
     }
+
+    const photoUrl = supabase.storage.from("productImage").getPublicUrl(uniqueFilename).publicURL;
 
     // Insert product data into the database
     const { data: products, error: insertError } = await supabase
@@ -139,9 +470,9 @@ router.post("/product", authenticateToken, upload.single("image"), async (req, r
       .insert({
         id_user: userId,
         id_category: id_category,
-        produkName: produkName,
+        product_name: product_name,
         price: price,
-        photo: imageData.path,
+        photo: photoUrl,
         stock: stock,
         detail: detail,
         created_at: createdAt,
@@ -172,7 +503,7 @@ router.post("/product", authenticateToken, upload.single("image"), async (req, r
 
 router.put("/product/:id", authenticateToken, upload.single("image"), async (req, res) => {
   const { id } = req.params;
-  const { id_category, produkName, price, stock, detail } = req.body;
+  const { id_category, product_name, price, stock, detail,photo } = req.body;
   const userId = req.user.userId; // Mengambil userId dari token yang telah di-autentikasi
   const image = req.file;
 
@@ -208,9 +539,9 @@ router.put("/product/:id", authenticateToken, upload.single("image"), async (req
       .update({
         id_user: userId,
         id_category: id_category,
-        produkName: produkName,
+        product_name: product_name,
         price: price,
-        photo: "photoUrl",
+        photo: photo,
         stock: stock,
         detail: detail,
         updated_at: createdAt,

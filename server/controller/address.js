@@ -10,6 +10,52 @@ const app = express();
 configureMiddleware(app);
 const router = express.Router();
 
+/**
+ * @openapi
+ * /province:
+ *   get:
+ *     tags:
+ *       - Address
+ *     summary: Get list of provinces
+ *     security: []
+ *     description: Retrieve a list of all provinces.
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved list of provinces
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                         example: 1
+ *                       name:
+ *                         type: string
+ *                         example: Jawa Barat
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
+
 router.get("/province", async (req, res) => {
     try {
         const { data: province, error } = await supabase
@@ -35,6 +81,55 @@ router.get("/province", async (req, res) => {
         });
     }
 })
+
+/**
+ * @openapi
+ * /regency:
+ *   get:
+ *     tags:
+ *       - Address
+ *     summary: Get list of regencies
+ *     security: []
+ *     description: Retrieve a list of all regencies.
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved list of regencies
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                         example: 1
+ *                       name:
+ *                         type: string
+ *                         example: Bandung
+ *                       province_id:
+ *                         type: integer
+ *                         example: 1
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
 
 router.get("/regency", async (req, res) => {
     try {
@@ -62,6 +157,55 @@ router.get("/regency", async (req, res) => {
     }
 })
 
+/**
+ * @openapi
+ * /district:
+ *   get:
+ *     tags:
+ *       - Address
+ *     summary: Get list of districts
+ *     security: []
+ *     description: Retrieve a list of all districts.
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved list of districts
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                         example: 1
+ *                       name:
+ *                         type: string
+ *                         example: DistrictName
+ *                       regency_id:
+ *                         type: integer
+ *                         example: 1
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
+
 router.get("/district", async (req, res) => {
     try {
         const { data: district, error } = await supabase
@@ -87,6 +231,55 @@ router.get("/district", async (req, res) => {
         });
     }
 })
+
+/**
+ * @openapi
+ * /village:
+ *   get:
+ *     tags:
+ *       - Address
+ *     summary: Get list of villages
+ *     security: []
+ *     description: Retrieve a list of all villages.
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved list of villages
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                         example: 1
+ *                       name:
+ *                         type: string
+ *                         example: VillageName
+ *                       district_id:
+ *                         type: integer
+ *                         example: 1
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
 
 router.get("/village", async (req, res) => {
     try {
@@ -114,6 +307,67 @@ router.get("/village", async (req, res) => {
     }
 })
 
+/**
+ * @openapi
+ * /address:
+ *   get:
+ *     tags:
+ *       - Address
+ *     summary: Get user addresses
+ *     description: Retrieve addresses associated with the authenticated user.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved user addresses
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       id_address:
+ *                         type: integer
+ *                         example: 1
+ *                       province:
+ *                         type: integer
+ *                         example: 11
+ *                       regency:
+ *                         type: integer
+ *                         example: 1101
+ *                       district:
+ *                         type: integer
+ *                         example: 1101010
+ *                       village:
+ *                         type: integer
+ *                         example: 1101010001
+ *                       patokan:
+ *                         type: string
+ *                         example: StreetName
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
+
 router.get("/address", authenticateToken, async (req, res) => {
     const id = req.user.userId; // Mengambil userId dari token yang telah di-autentikasi
     try {
@@ -136,6 +390,97 @@ router.get("/address", authenticateToken, async (req, res) => {
     }
 
 })
+
+/**
+ * @openapi
+ * /address:
+ *   post:
+ *     tags:
+ *       - Address
+ *     summary: Add new address
+ *     description: Add a new address for the authenticated user.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               province_id:
+ *                 type: integer
+ *                 example: 1
+ *               regency_id:
+ *                 type: integer
+ *                 example: 1
+ *               district_id:
+ *                 type: integer
+ *                 example: 1
+ *               village_id:
+ *                 type: integer
+ *                 example: 1
+ *               patokan:
+ *                 type: string
+ *                 example: Near the big tree
+ *     responses:
+ *       200:
+ *         description: Successfully added new address
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Address Added Successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id_address:
+ *                       type: integer
+ *                       example: 1
+ *                     id_user:
+ *                       type: integer
+ *                       example: 1
+ *                     province_id:
+ *                       type: integer
+ *                       example: 1
+ *                     regency_id:
+ *                       type: integer
+ *                       example: 1
+ *                     district_id:
+ *                       type: integer
+ *                       example: 1
+ *                     village_id:
+ *                       type: integer
+ *                       example: 1
+ *                     patokan:
+ *                       type: string
+ *                       example: Near the big tree
+ *                     created_at:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2024-06-01T12:00:00Z"
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
 
 router.post("/address", authenticateToken, async (req, res) => {
     const id = req.user.userId;

@@ -10,7 +10,7 @@ import "./../../../assets/Style/Index.css"
 import "./../../../assets/JavaScript/Index.js"
 import "./../../../assets/JavaScript/Jquery.js"
 import "./../../../assets/JavaScript/Script.js"
-import "./../../../assets/JavaScript/Bootstrap.min.js"
+
 
 
 const Admin = () => {

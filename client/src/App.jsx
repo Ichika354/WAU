@@ -10,6 +10,7 @@ import AdminCategory from './Pages/Dashboard/Admin/Category/AdminCategory.jsx';
 import AddAdminCategory from './Pages/Dashboard/Admin/Category/AddAdminCategory.jsx';
 import UpdateAdminCategory from './Pages/Dashboard/Admin/Category/UpdateAdminCategory.jsx';
 import Seller from './Pages/Dashboard/Seller/Seller.jsx';
+import Access from './Pages/Error/Access.jsx';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -28,6 +29,7 @@ function App() {
         <Route path='/add-admin-category' element={<AddAdminCategory />}/>
         <Route path='/update-admin-category/:id' element={<UpdateAdminCategory />}/>
         <Route path='/seller' element={<Seller />}/>
+        <Route path='/access' element={<Access />}/>
       </Routes>
     </Router>
     </>
