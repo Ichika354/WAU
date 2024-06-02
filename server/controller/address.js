@@ -517,4 +517,128 @@ router.post("/address", authenticateToken, async (req, res) => {
     }
 })
 
+/**
+ * @openapi
+ * /address:
+ *   put:
+ *     tags:
+ *       - Address
+ *     summary: Update address
+ *     description: Update user's address.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id_address:
+ *                 type: integer
+ *                 example: 1
+ *               province_id:
+ *                 type: integer
+ *                 example: 1
+ *               regency_id:
+ *                 type: integer
+ *                 example: 1
+ *               district_id:
+ *                 type: integer
+ *                 example: 1
+ *               village_id:
+ *                 type: integer
+ *                 example: 1
+ *               patokan:
+ *                 type: string
+ *                 example: "Jl. Contoh No. 123"
+ *     responses:
+ *       200:
+ *         description: Successfully updated address
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Address Updated Successfully
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id_address:
+ *                       type: integer
+ *                       example: 1
+ *                     id_user:
+ *                       type: integer
+ *                       example: 1
+ *                     province_id:
+ *                       type: integer
+ *                       example: 1
+ *                     regency_id:
+ *                       type: integer
+ *                       example: 1
+ *                     district_id:
+ *                       type: integer
+ *                       example: 1
+ *                     village_id:
+ *                       type: integer
+ *                       example: 1
+ *                     patokan:
+ *                       type: string
+ *                       example: "Jl. Contoh No. 123"
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
+
+router.put("/address",authenticateToken, async (req,res) => {
+    const id = req.user.userId;
+    const { id_address, province_id, regency_id, district_id, village_id, patokan } = req.body;
+    try {
+        const { data: address, error } = await supabase
+            .from("addresses")
+            .update({
+                province_id: province_id,
+                regency_id: regency_id,
+                district_id: district_id,
+                village_id: village_id,
+                patokan: patokan
+            })
+            .eq("id_address", id_address)
+            .eq("id_user", id)
+            .select("*")
+
+        if (error) {
+            console.error(error);
+            return res.status(500).json({
+                success: false,
+                message: error.message
+            });
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Address Updated Successfully",
+            data: address
+        });
+    } catch (error) {
+        console.error(error);
+    }
+})
+
 export default router;

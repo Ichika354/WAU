@@ -356,7 +356,7 @@ router.get("/product-seller", authenticateToken, async (req, res) => {
  *     requestBody:
  *       required: true
  *       content:
- *         multipart/form-data:
+ *         application/json:
  *           schema:
  *             type: object
  *             properties:
@@ -376,9 +376,9 @@ router.get("/product-seller", authenticateToken, async (req, res) => {
  *               detail:
  *                 type: string
  *                 example: "Detailed description of the product"
- *               image:
+ *               photo:
  *                 type: string
- *                 format: binary
+ *                 example: "filename.jpg"
  *     responses:
  *       200:
  *         description: Successfully added new product
@@ -443,26 +443,19 @@ router.get("/product-seller", authenticateToken, async (req, res) => {
  */
 
 router.post("/product", authenticateToken, upload.single("image"), async (req, res) => {
-  const { id_category, product_name, price, stock, detail } = req.body;
-  const userId = req.user.userId; // Get userId from the authenticated token
-  const image = req.file;
+  const { id_category, product_name, price, stock, detail, photo } = req.body;
+  const userId = req.user.userId; // Mengambil userId dari token yang telah di-autentikasi
+  // const image = req.file;
 
   try {
     const createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
 
     // Generate unique filename using UUID
-    const uniqueFilename = `${uuidv4()}-${image.originalname}`;
-    const { data: imageData, error: imageError } = await supabase.storage.from("productImage").upload(uniqueFilename, image.buffer);
+    // const { data: imageData, error: imageError } = await supabase.storage.from("productImage").upload(`/${image.originalname}`, image.buffer);
 
-    if (imageError) {
-      console.error("Image upload error:", imageError);
-      return res.status(500).json({
-        success: false,
-        message: "Image upload failed",
-      });
-    }
-
-    const photoUrl = supabase.storage.from("productImage").getPublicUrl(uniqueFilename).publicURL;
+    // if (imageError) {
+    //   return res.json(imageError);
+    // }
 
     // Insert product data into the database
     const { data: products, error: insertError } = await supabase
@@ -472,7 +465,7 @@ router.post("/product", authenticateToken, upload.single("image"), async (req, r
         id_category: id_category,
         product_name: product_name,
         price: price,
-        photo: photoUrl,
+        photo: photo,
         stock: stock,
         detail: detail,
         created_at: createdAt,
@@ -501,14 +494,138 @@ router.post("/product", authenticateToken, upload.single("image"), async (req, r
   }
 });
 
+/**
+ * @openapi
+ * /product/{id}:
+ *   put:
+ *     tags:
+ *       - Product
+ *     summary: Update product
+ *     description: Update a product for the authenticated user.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the product to update
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id_category:
+ *                 type: integer
+ *                 example: 1
+ *               product_name:
+ *                 type: string
+ *                 example: "Updated Product Name"
+ *               price:
+ *                 type: number
+ *                 format: float
+ *                 example: 29.99
+ *               stock:
+ *                 type: integer
+ *                 example: 200
+ *               detail:
+ *                 type: string
+ *                 example: "Updated detailed description of the product"
+ *               photo:
+ *                 type: string
+ *                 example: "updated_filename.jpg"
+ *     responses:
+ *       200:
+ *         description: Successfully updated product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Product has been updated
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id_product:
+ *                       type: integer
+ *                       example: 1
+ *                     id_user:
+ *                       type: integer
+ *                       example: 1
+ *                     id_category:
+ *                       type: integer
+ *                       example: 1
+ *                     product_name:
+ *                       type: string
+ *                       example: "Updated Product Name"
+ *                     price:
+ *                       type: number
+ *                       format: float
+ *                       example: 29.99
+ *                     stock:
+ *                       type: integer
+ *                       example: 200
+ *                     detail:
+ *                       type: string
+ *                       example: "Updated detailed description of the product"
+ *                     photo:
+ *                       type: string
+ *                       example: "URL of the updated product image"
+ *                     updated_at:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2024-06-02T12:00:00Z"
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
+
 router.put("/product/:id", authenticateToken, upload.single("image"), async (req, res) => {
   const { id } = req.params;
-  const { id_category, product_name, price, stock, detail,photo } = req.body;
+  const { id_category, product_name, price, stock, detail, photo } = req.body;
   const userId = req.user.userId; // Mengambil userId dari token yang telah di-autentikasi
   const image = req.file;
 
+  console.log(id_category, product_name, price, stock, detail, photo);
+
   try {
     const createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
+
+    const { product, error } = await supabase
+      .from("products")
+      .select(
+        `
+                *,
+                categories (*)
+            `
+      )
+
+    if (product <= 0) {
+      return res.json({
+        success: false,
+        message: "Product not found",
+      });
+    }
 
     // Generate unique filename using UUID
     // const uniqueFileName = `images/${uuidv4()}.${image.originalname.split('.').pop()}`;
@@ -570,6 +687,86 @@ router.put("/product/:id", authenticateToken, upload.single("image"), async (req
     });
   }
 });
+
+/**
+ * @openapi
+ * /product/{id}:
+ *   delete:
+ *     tags:
+ *       - Product
+ *     summary: Delete product
+ *     description: Delete a product for the authenticated user.
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the product to delete
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Successfully deleted product
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 message:
+ *                   type: string
+ *                   example: Product has been deleted
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     id_product:
+ *                       type: integer
+ *                       example: 1
+ *                     id_user:
+ *                       type: integer
+ *                       example: 1
+ *                     id_category:
+ *                       type: integer
+ *                       example: 1
+ *                     product_name:
+ *                       type: string
+ *                       example: "Deleted Product Name"
+ *                     price:
+ *                       type: number
+ *                       format: float
+ *                       example: 19.99
+ *                     stock:
+ *                       type: integer
+ *                       example: 100
+ *                     detail:
+ *                       type: string
+ *                       example: "Detailed description of the deleted product"
+ *                     photo:
+ *                       type: string
+ *                       example: "URL of the deleted product image"
+ *                     created_at:
+ *                       type: string
+ *                       format: date-time
+ *                       example: "2024-06-01T12:00:00Z"
+ *       401:
+ *         description: Unauthorized
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: false
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error
+ */
 
 router.delete("/product/:id", authenticateToken, async (req, res) => {
   const { id } = req.params;
