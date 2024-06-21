@@ -87,9 +87,10 @@ router.get("/product", async (req, res) => {
       .from("products")
       .select(
         `
-                *,
-                categories (*)
-            `
+          *,
+          categories (*, category_admins(category,icon)),
+          users(id,name,npm,role)
+        `
       )
       .order("id_product");
 
@@ -611,14 +612,12 @@ router.put("/product/:id", authenticateToken, upload.single("image"), async (req
   try {
     const createdAt = moment().format("YYYY-MM-DD HH:mm:ss");
 
-    const { product, error } = await supabase
-      .from("products")
-      .select(
-        `
+    const { product, error } = await supabase.from("products").select(
+      `
                 *,
                 categories (*)
             `
-      )
+    );
 
     if (product <= 0) {
       return res.json({
