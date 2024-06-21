@@ -91,6 +91,28 @@ router.get("/users", async (req, res) => {
     }
 })
 
+router.get("/users/seller", async (req, res) => {
+    try {
+        const { data: users, error } = await supabase
+            .from("users")
+            .select("*")
+            .order("id")
+            .eq('role','Seller');
+
+
+        return res.status(200).json({
+            success: true,
+            data: users
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+})
+
 // endpoint untuk mengambil data user yang sedang login melalui token jwt
 /**
  * @openapi
