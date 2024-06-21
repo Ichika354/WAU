@@ -6,7 +6,7 @@ const configureMiddleware = (app) => {
   app.use(express.json());
   app.use(
     cors({
-      origin: ["https://ichika354.github.io", "http://localhost:5173"],
+      origin: ["https://ichika354.github.io", "http://localhost:5173", "http://127.0.0.1:5500"],
       methods: ["GET", "POST", "PUT", "OPTIONS", "DELETE"],
       credentials: true,
       optionsSuccessStatus: 200,
