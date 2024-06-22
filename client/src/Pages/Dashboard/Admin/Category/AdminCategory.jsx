@@ -6,7 +6,7 @@ import SideBar from "../SideBar/SideBar";
 import Navigation from "../Navbar/Navigation";
 
 const Category = () => {
-  const endPoint = "http://localhost:3000/category-admin";
+  const endPoint = "https://wirausahaanakulbi-server.vercel.app/category-admin";
   const [categories, setCategories] = useState([]);
 
   const fetchCategories = async () => {
@@ -14,7 +14,7 @@ const Category = () => {
       const response = await axios.get(endPoint);
       setCategories(response.data.data);
     } catch (err) {
-      console.error("Error fetching bookings:", err);
+      console.error("Error fetching :", err);
     }
   };
 

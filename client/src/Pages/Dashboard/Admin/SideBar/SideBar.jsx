@@ -10,7 +10,7 @@ const SideBar = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/user', {
+        const response = await axios.get('https://wirausahaanakulbi-server.vercel.app/user', {
           withCredentials: true // Send cookies with the request
         });
 

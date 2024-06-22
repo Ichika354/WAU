@@ -13,7 +13,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/login", { npm, password }, { withCredentials: true });
+      const response = await axios.post("https://wirausahaanakulbi-server.vercel.app/login", { npm, password }, { withCredentials: true });
       console.log(response.data.role); // Pesan sambutan dari backend
       Swal.fire({
         title: "Logined!",

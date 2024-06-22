@@ -10,7 +10,7 @@ const AddAdminCategory = () => {
   const [category, setCategory] = useState([]);
   const [icon, setIcon] = useState([]);
   const [responseMessage, setResponseMessage] = useState("");
-  const endPoint = "http://localhost:3000/category-admin";
+  const endPoint = "https://wirausahaanakulbi-server.vercel.app/category-admin";
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {

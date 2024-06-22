@@ -9,7 +9,7 @@ const UpdateAdminCategory = () => {
   const { id } = useParams();
   const [category, setCategory] = useState("");
   const [icon, setIcon] = useState("");
-  const endPoint = `http://localhost:3000/category-admin/${id}`;
+  const endPoint = `https://wirausahaanakulbi-server.vercel.app/category-admin/${id}`;
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -88,14 +88,7 @@ const UpdateAdminCategory = () => {
                               <p className="mb-3">:</p>
                             </td>
                             <td>
-                              <input 
-                                type="text" 
-                                name="category" 
-                                className="mb-3 form-control" 
-                                value={category}  
-                                onChange={(e) => setCategory(e.target.value)} 
-                                placeholder="isi kategori..." 
-                              />
+                              <input type="text" name="category" className="mb-3 form-control" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="isi kategori..." />
                             </td>
                           </tr>
                           <tr>
@@ -106,14 +99,7 @@ const UpdateAdminCategory = () => {
                             </td>
                             <td className="pe-3">:</td>
                             <td>
-                              <input 
-                                type="text" 
-                                name="icon" 
-                                value={icon}  
-                                onChange={(e) => setIcon(e.target.value)} 
-                                className="form-control" 
-                                placeholder="isi icon" 
-                              />
+                              <input type="text" name="icon" value={icon} onChange={(e) => setIcon(e.target.value)} className="form-control" placeholder="isi icon" />
                             </td>
                           </tr>
                           <tr>

@@ -18,7 +18,7 @@ const Registration = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/registration", { name, npm, numberPhone, password, confirmPassword, role }, { withCredentials: true });
+      const response = await axios.post("https://wirausahaanakulbi-server.vercel.app/registration", { name, npm, numberPhone, password, confirmPassword, role }, { withCredentials: true });
       Swal.fire({
         title: "Registered!",
         text: response.data.message,
