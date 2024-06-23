@@ -2,11 +2,9 @@ import jwt from "jsonwebtoken";
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  const token = req.cookies.token;
-  const tokenHeader = authHeader && authHeader.split(' ')[1];
-  
+  const token = authHeader && authHeader.split(' ')[1];
 
-  if (token == null) {
+  if (!token) {
     return res.status(401).json({ 
       success: false, 
       message: 'Token required' 
@@ -21,7 +19,7 @@ const authenticateToken = (req, res, next) => {
       });
     }
 
-    req.user = user; // Tambahkan user ke request
+    req.user = user; // Add user to request
     next();
   });
 };
